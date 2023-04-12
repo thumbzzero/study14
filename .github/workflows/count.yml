@@ -1,0 +1,27 @@
+name: Update PR count
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-pr-count:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Count PRs
+        id: pr-count
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          repository: ${{ github.repository }}
+          event-type: pr-count
+      - name: Update TEST.MD
+        run: |
+          sed -i "s/PR count: .*/PR count: ${{ steps.pr-count.outputs.PR_COUNT }}/g" PR.md
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add TEST.MD
+          git commit -m "Update PR count"
+          git push
