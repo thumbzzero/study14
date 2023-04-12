@@ -3,7 +3,7 @@ name: Update PR count
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   update-pr-count:
