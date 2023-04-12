@@ -15,6 +15,7 @@ jobs:
         id: pr-count
         uses: peter-evans/repository-dispatch@v1
         with:
+          token: ${{ secrets.PAT }}
           repository: ${{ github.repository }}
           event-type: pr-count
       - name: Update TEST.MD
